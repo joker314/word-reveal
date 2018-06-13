@@ -11,7 +11,7 @@ const CTX = C.getContext("2d")
 
 getWords().then(words => {
 	const drawFrame = () => {
-		if(gameState.round >= ROUNDS) return roundCheck(CTX, C);
+		if(gameState.round >= ROUNDS || gameState.total <= 0) return roundCheck(CTX, C);
 		
 		drawBackground(CTX, C, "black")
 		drawCounter(CTX, C, gameState.points, gameState.penalty, "lightgreen", "red")
