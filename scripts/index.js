@@ -69,3 +69,12 @@ function getWords() {
     ok(Array(ROUNDS).fill('').map(() => base[Math.floor(Math.random() * base.length)]))  
   })
 }
+
+function nextRound() {
+	console.log("Next round.")
+	gameState.total += gameState.points - 30
+	gameState.points = 100
+	gameState.penalty = 0
+  gameState.text = ""
+++gameState.round
+}
