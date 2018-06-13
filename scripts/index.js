@@ -78,3 +78,14 @@ function nextRound() {
   gameState.text = ""
 ++gameState.round
 }
+
+function roundCheck(ctx, canvas) {
+	if(gameState.total <= 0) {
+  	display(ctx, canvas, "loss", "red", "white")
+    return;
+  }
+  if(gameState.round >= ROUNDS) {
+  	if(gameState.total < TARGET) display(ctx, canvas, "loss", "red", "white")
+    else display(ctx, canvas, "win", "green", "white")
+  }
+}
