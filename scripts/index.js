@@ -58,3 +58,14 @@ getWords().then(words => {
     }
   })
 })
+
+function getWords() {
+	return new Promise((ok, no) => {
+  	const base = ["apple", "now", "no", "stop",
+    							"yes", "green", "lemon", "cheese",
+                  "kiwi", "beer", "free", "six", "yarn",
+                  "power", "change", "wait", "drama"]
+    
+    ok(Array(ROUNDS).fill('').map(() => base[Math.floor(Math.random() * base.length)]))  
+  })
+}
