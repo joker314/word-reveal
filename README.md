@@ -33,26 +33,179 @@ To make a guess, type what you think the word is through your keyboard. To remov
 
 To help you, the code is split into three files.
 
-`constants.js` is a file that contains all the numeric constants.
+## `constants.js`
+A file that contains all the numeric constants.
 
 - The score needed to win at the end (`TARGET`)
 - How many rounds are needed (and therefore how many words must be fetched) (`ROUNDS`)
 - The character code for the enter key, which is 13. (`ENTER`)
 - The character code for the backspace key, which is 8. (`BACKSPACE`)
 
---------------
-
-`canvasFunctions.js` is a file that contains all the functions that manipulate the canvas to draw game objects.
+## `canvasFunctions.js`
+A file that contains all the functions that manipulate the canvas to draw game objects.
 
 Note that all these functions **must** take the CanvasRenderingContext2D as the first argument; and **must** take the HTML canvas element as the second argument. These are represented with `...` in the table below.
 
 <table>
-  <tr><th>Function name</th><th>How to call</th><th>What it does</th></tr>
+  <tr>
+    <th>Function name</th>
+    <th>Arguments</th>
+    <th>What it does</th>
+  </tr>
   
-  <tr><td><code>display</code></td><td><code>display(..., &lt;text to display&gt;, &lt;background color&gt;, &lt;color of text&gt;)</td><td>Centers the text and renders it, on its own, in the middle of the canvas on a background as specified</td></tr>
+  <tr>
+    <td>
+      <code>display</code>
+    </td>
+    <td>
+      <ul>
+        <li>text to display</li>
+        <li>background behind text</li>
+        <li>colour of text</li>
+      </ul>
+    </td>
+    <td>
+      Shows only the given text, in the centre of the canvas, over a certain background.
+    </td>
+  </tr>
   
-  <tr><td><code>drawBackground</code></td><td><code>drawBackground(..., &lt;color&gt;)</code></td><td>Fills the entire canvas with the specified colour.</td></tr>
+  <tr>
+    <td>
+      <code>drawWord</code>
+    </td>
+    <td>
+      <ul>
+        <li>percentage of round left (0 to 100)</li>
+        <li>hidden word</li>
+        <li>colour of word</li>
+        <li>colour of cover (i.e. solid rectangle that obscures word)</li>
+      </ul>
+    </td>
+    <td>
+      Renders the round's word onto the canvas, covered by a solid rectangle of the size and colours specified.
+    </td>
+  </tr>
   
-  <tr><td><code>drawWord</code></td><td><code>display(..., &lt;word to display&gt;, &lt;percentage of round not completed&gt;, &lt;color of text&gt;, &lt;covering color&gt;)</td><td>Draws a word in a specified color, then obscures it by a certain amount (determined by an argument) with a solid rectangle of a specified color</td></tr>
-  <tr><td><code>display</code></td><td><code>display(..., &lt;text to display&gt;, &lt;background color&gt;, &lt;color of text&gt;)</td><td>Centers the text and renders it, on its own, in the middle of the screen on a background as specified</td></tr>
+  <tr>
+    <td>
+      <code>drawBackground</code>
+    </td>
+    <td>
+      <ul>
+        <li>colour of background</li>
+      </ul>
+    </td>
+    <td>
+      Covers the entire canvas with a solid rectangle of the colour specified.
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>drawCounter</code>
+    </td>
+    <td>
+      <ul>
+        <li>percentage of round left (0 to 100)</li>
+        <li>points lost by incorrect guesses</li>
+        <li>colour of time left</li>
+        <li>colour of time used</li>
+      </ul>
+    </td>
+    <td>
+      Renders the vertical counter using the percentage argument. Renders the round's score using both the percentage *and* the points lost.
+    </td>
+  </tr>
+  
+  <tr>
+    <td>
+      <code>drawTotal</code>
+    </td>
+    <td>
+      <ul>
+        <li>total score</li>
+        <li>colour of bar</li>
+        <li>colour of label</li>
+      </ul>
+    </td>
+    <td>
+      Renders the total score in the bar at the bottom, using the colour specified. Also, attaches a numeric label to show the score as an absolute number rather than as a visual fraction of the target.
+    </td>
+  </tr>
 </table>
+
+## `index.js` 
+A file that handles the main game loop.
+
+### `getWords(rounds)`
+
+This returns a promise, which should only ever resolve. Ideally, it should pull from an online database of words; however, it may fallback to a hard-coded list if there is no internet connection.
+
+### `nextRound()`
+
+Upgrades the round in the `gameState` object and resets the round's score, penalty, etc. 
+
+### `roundCheck(ctx, canvas)`
+
+This takes the `ctx` and `canvas` arguments, even though it doesn't directly manipulate the canvas. Instead, it will call `display` with relevant arguments that will depend on whether the game is a loss or a win.
+
+This function will do nothing if the game hasn't reached an end.
+
+### gameState
+
+`gameState` is an object containing the state of the game.
+
+#### `total`
+
+The total number of points
+
+#### `round`
+
+The index of the round
+
+#### `points`
+
+This is actually counter-intuitive. The `points` is the percentage of the round yet to complete. If there are no wrong guesses, this happens to be the number of `points` the user gets. To calculate the user's points, one must subtract the `penalty`
+
+#### `penalty`
+
+The number which, when subtracted from `points`, is the round's points.
+
+#### `text`
+
+The text which a user has entered through their keyboard but not submitted yet
+
+## General structure
+
+The constants and canvas functions are imported. Then, `getWords(ROUNDS)` is called. The promise is resolved, and when that happens a series of things will happen.
+
+Firstly, the game loop is declared.
+
+Secondly, event listeners are binded to `document`
+
+The game loop runs the following:
+
+- Has the game ended? If so, call `roundCheck(CTX, C)` and quit the game loop.
+- Draw the background, total score counter, round score counter, round timer, and the concealed word
+- Lower the number of time in the round remaining
+- If the time for this round has run out, move on to the next round
+- Tell the browser you're ready for the next game tick
+- Draw the inputted text to the screen so the user knows what they're typing
+
+The event listener `keypress` runs:
+
+- Figure out the keycode of the key that has just been pressed, in a cross-browser way
+- If it's not backspace, add it to the `text` property in `gameState`
+
+The event listener `keydown` runs:
+
+- Figure out the keycode of the key that has just been pressed, in a cross-browser way
+- If it's ENTER (13)
+  - Trim off any newline characters (`\r` is the annoying one)
+  - Compare it with the target word
+  - If it's a match
+    - Run `nextRound()`
+  - Otherwise
+    - Clear the text and add 20 to the `penalty` property of `gameState`
+- If it's BACKSPACE (8)
+  - Remove the rightmost character, if it exists, from the `text` property of `gameState`
