@@ -1,8 +1,8 @@
 const gameState = {
-	total: 50,   // 0 => 300
+	total: 50,   // => 0 => 300 =>
 	round: 0,    // 0 => 4
 	points: 100, // 0 <= 100
-	penalty: 0, //   => 0
+	penalty: 30, // 30 => 
 	text: "",
 }
 
@@ -72,9 +72,9 @@ function getWords() {
 }
 
 function nextRound() {
-	gameState.total += gameState.points - 30
+	gameState.total += gameState.points
 	gameState.points = 100
-	gameState.penalty = 0
+	gameState.penalty = 30
 	gameState.text = ""
 	++gameState.round
 }
