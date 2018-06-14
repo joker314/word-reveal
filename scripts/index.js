@@ -72,7 +72,7 @@ function getWords() {
 }
 
 function nextRound() {
-	gameState.total += gameState.points
+	gameState.total += gameState.points - gameState.penalty
 	gameState.points = 100
 	gameState.penalty = 30
 	gameState.text = ""
