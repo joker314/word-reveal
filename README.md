@@ -13,7 +13,7 @@ Your total score is displayed above the yellow bar at the bottom. The yellow bar
 
 ### Round Score
 
-In each round, your score is displayed (**before** the deduction of 30 points), above the vertical bar on the left.
+In each round, your score is displayed, above the vertical bar on the left.
 
 ### Time in Round
 
@@ -21,7 +21,7 @@ The green vertical bar will show how much time is left in the round. If it cover
 
 # Rules
 
-In each round, you start with 100 round points. This steadily decreases. Each time you make an incorrect guess, **20 round points will be deducted**. When the round ends, **30 points are deducted** and the result is added to the total points.
+In each round, you start with 70 round points. This steadily decreases. Each time you make an incorrect guess, **20 round points will be deducted**. When the round ends, the result is added to the total points.
 
 The total points will begin at 50. To win, at the end of the game you must have 300 points.
 
@@ -44,7 +44,7 @@ A file that contains all the numeric constants.
 ## `canvasFunctions.js`
 A file that contains all the functions that manipulate the canvas to draw game objects.
 
-Note that all these functions **must** take the CanvasRenderingContext2D as the first argument; and **must** take the HTML canvas element as the second argument. These are represented with `...` in the table below.
+Note that all these functions **must** take the CanvasRenderingContext2D as the first argument; and **must** take the HTML canvas element as the second argument. These are implied in the table below.
 
 <table>
   <tr>
@@ -169,7 +169,7 @@ This is actually counter-intuitive. The `points` is the percentage of the round 
 
 #### `penalty`
 
-The number which, when subtracted from `points`, is the round's points.
+The number which, when subtracted from `points`, is the round's points. This starts at 30 because `100 - 30 = 0`.
 
 #### `text`
 
