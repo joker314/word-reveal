@@ -19,7 +19,10 @@ getWords().then(words => {
 		drawWord(CTX, C, gameState.points, words[gameState.round], "green", "red")
 		drawTotal(CTX, C, gameState.total, "yellow", "turquoise")
 		
-		const delta = now - (gameState.startedAt || now)
+		
+		if(gameState.startedAt === null) gameState.startedAt = now
+		
+		const delta = now - gameState.startedAt
 		
 		gameState.points = 100 * (delta / ROUND_DURATION)
 		
