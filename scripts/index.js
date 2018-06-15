@@ -4,7 +4,7 @@ const gameState = {
 	points: 100, // 0 <= 100
 	penalty: 30, // 30 => 
 	text: "",
-	startedAt: null,
+	roundStartedAt: null,
 }
 
 const C = document.querySelector("canvas")
@@ -20,9 +20,9 @@ getWords().then(words => {
 		drawTotal(CTX, C, gameState.total, "yellow", "turquoise")
 		
 		
-		if(gameState.startedAt === null) gameState.startedAt = now
+		if(gameState.roundStartedAt === null) gameState.roundStartedAt = now
 		
-		const delta = now - gameState.startedAt
+		const delta = now - gameState.roundStartedAt
 		
 		gameState.points = 100 * (1 - delta / (ROUND_DURATION * 1000))
 		
@@ -80,6 +80,7 @@ function getWords() {
 function nextRound() {
 	debugger;
 	gameState.total += gameState.points - gameState.penalty
+	gameState.roundStartedAt = null
 	gameState.points = 100
 	gameState.penalty = 30
 	gameState.text = ""
