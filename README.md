@@ -38,6 +38,7 @@ A file that contains all the numeric constants.
 
 - The score needed to win at the end (`TARGET`)
 - How many rounds are needed (and therefore how many words must be fetched) (`ROUNDS`)
+- How many seconds are in each round (`ROUND_DURATION`)
 - The character code for the enter key, which is 13. (`ENTER`)
 - The character code for the backspace key, which is 8. (`BACKSPACE`)
 
@@ -170,6 +171,10 @@ This is actually counter-intuitive. The `points` is the percentage of the round 
 #### `penalty`
 
 The number which, when subtracted from `points`, is the round's points. This starts at 30 because `100 - 30 = 0`.
+
+#### `startedAt`
+
+The high-quality timestamp since the page loaded (roughly) when the game initially started.
 
 #### `text`
 
