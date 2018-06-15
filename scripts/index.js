@@ -24,7 +24,7 @@ getWords().then(words => {
 		
 		const delta = now - gameState.startedAt
 		
-		gameState.points = 100 * (1 - delta / (ROUND_DURATION * 10e3))
+		gameState.points = 100 * (1 - delta / (ROUND_DURATION * 1000))
 		
 		if(Math.floor(gameState.points) <= 0) {
 			nextRound()
