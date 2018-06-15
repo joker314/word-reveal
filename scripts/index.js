@@ -78,7 +78,6 @@ function getWords() {
 }
 
 function nextRound() {
-	debugger;
 	gameState.total += gameState.points - gameState.penalty
 	gameState.roundStartedAt = null
 	gameState.points = 100
