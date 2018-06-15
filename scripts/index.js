@@ -4,13 +4,14 @@ const gameState = {
 	points: 100, // 0 <= 100
 	penalty: 30, // 30 => 
 	text: "",
+	startedAt: null,
 }
 
 const C = document.querySelector("canvas")
 const CTX = C.getContext("2d")
 
 getWords().then(words => {
-	const drawFrame = () => {
+	const drawFrame = now => {
 		if(gameState.round >= ROUNDS || gameState.total <= 0) return roundCheck(CTX, C);
 		
 		drawBackground(CTX, C, "black")
@@ -18,20 +19,22 @@ getWords().then(words => {
 		drawWord(CTX, C, gameState.points, words[gameState.round], "green", "red")
 		drawTotal(CTX, C, gameState.total, "yellow", "turquoise")
 		
-		gameState.points -= 0.1
+		const delta = now - (gameState.startedAt || now)
+		
+		gameState.points = 100 * (delta / ROUND_DURATION)
 		
 		if(Math.floor(gameState.points) <= 0) {
 			nextRound()
 		}
 		
-		requestAnimationFrame(drawFrame);
-		
 		CTX.font = "20px monospace"
 		CTX.fillStyle = "white"
 		CTX.fillText(gameState.text, C.width / 5 + 10, C.height / 2 + 90)
+		
+		requestAnimationFrame(drawFrame)
 	}
 	
-	drawFrame()
+	requestAnimationFrame(drawFrame)
   
 	document.addEventListener("keypress", e => {
 		const key = e.which || e.keyCode || e.charCode
