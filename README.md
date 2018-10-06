@@ -1,8 +1,8 @@
-[**Play now**](https://joker314.github.io/word-reveal/src)
-
-
 # word-reveal
 A game where a word is slowly revealed
+
+[**Play now**](https://joker314.github.io/word-reveal/src)
+
 
 # Instructions
 
