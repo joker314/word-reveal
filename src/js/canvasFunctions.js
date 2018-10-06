@@ -24,7 +24,7 @@ drawBackground = (ctx, canvas, color) => {
 };
 
 drawCounter = (ctx, canvas, score, penalty, good, bad) => {
-	const percent = score / 100
+	const percent = score / 100;
 	const w10 = 0.1 * canvas.width;
 	const h20 = 0.2 * canvas.height;	
 	ctx.fillStyle = good;
