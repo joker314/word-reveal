@@ -34,7 +34,7 @@ nextRound = () => {
 
 roundCheck = (ctx, canvas) => {
 	if (gameState.total <= 0) {
-		display(ctx, canvas, "loss", "red", "white")
+		display(ctx, canvas, "loss", "red", "white");
 		return;
 	};
 	if (gameState.round >= ROUNDS) {
