@@ -1,0 +1,22 @@
+{
+  "name": "word-reveal",
+  "version": "1.0.0",
+  "description": "A game where a word is slowly revealed",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/joker314/word-reveal.git"
+  },
+  "author": "joker314, g1stavo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/joker314/word-reveal/issues"
+  },
+  "homepage": "https://github.com/joker314/word-reveal#readme",
+  "devDependencies": {
+    "express": "4.15.3"
+  }
+}
